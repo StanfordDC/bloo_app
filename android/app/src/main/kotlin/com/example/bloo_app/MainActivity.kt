@@ -1,4 +1,4 @@
-package com.example.bloo_app
+package com.boss.bloo_app
 
 import io.flutter.embedding.android.FlutterActivity
 
