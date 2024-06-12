@@ -31,7 +31,7 @@ if (keystorePropertiesFile.exists()) {
   }
 
 android {
-    namespace "com.example.bloo_app"
+    namespace "com.boss.bloo_app"
     compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
