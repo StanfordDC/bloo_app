@@ -1,4 +1,4 @@
-# bloo_app
+# Bloo App
 
 A new Flutter project.
 
