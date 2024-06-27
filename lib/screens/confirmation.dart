@@ -57,11 +57,11 @@ class _ConfirmationState extends State<Confirmation> {
               decoration: BoxDecoration(
                   image: DecorationImage(
                   image: FileImage(File(imagePath)) as ImageProvider,
-                fit: BoxFit.scaleDown,
+                fit: BoxFit.cover,
               )
             ),
-            margin: const EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 20.0),
-            height: 300,
+            margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
+            height: 350,
             width: 400,),
             if(!confirmed)
               buildRow()
