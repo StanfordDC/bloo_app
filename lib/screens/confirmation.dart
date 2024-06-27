@@ -36,7 +36,7 @@ class _ConfirmationState extends State<Confirmation> {
     if (response.statusCode == 200) {
       Map data = jsonDecode(response.body);
       setState(() {
-        wasteType = data['items'][0];
+        wasteType = data['from_database'][0]['item'];
       });
     } else {
       throw Exception(response);
