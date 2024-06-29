@@ -17,7 +17,7 @@ class _ConfirmationState extends State<Confirmation> {
   late String imagePath;
   bool confirmed = false;
   String wasteType = "";
-  late List<WasteType> list;
+  List<WasteType> list = [];
 
   String convert(String imagePath){
     List<int> imageBytes = File(imagePath).readAsBytesSync();
@@ -38,7 +38,9 @@ class _ConfirmationState extends State<Confirmation> {
     if (response.statusCode == 200) {
       Map data = jsonDecode(response.body);
       setState(() {
-        wasteType = data['from_database'][0]['item'];
+        list.addAll((data['from_database'] as List).map((item) => WasteType.fromJson(item)).toList());
+        list.addAll((data['from_llm'] as List).map((item) => WasteType.fromJson(item)).toList());
+        wasteType = list[0].item;
       });
     } else {
       throw Exception(response);
