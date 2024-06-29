@@ -65,31 +65,6 @@ class _RecycleState extends State<Recycle> {
           )
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: Color.fromRGBO(255, 255, 255, .7),
-      //   shape: const CircleBorder(),
-      //   onPressed: () async{
-      //     try{
-      //       await cameraValue;
-
-      //       final image = await cameraController.takePicture();
-      //       if (!context.mounted) return;
-
-      //       // If the picture was taken, display it on a new screen.
-      //       Navigator.pushReplacementNamed(context, '/confirmation', arguments: image.path);
-      //       } catch (e) {
-      //       // If an error occurs, log the error to the console.
-      //       print(e);
-      //       }
-      //   },
-      //   child: const Icon(
-      //       Icons.camera_alt,
-      //       size: 40,
-      //       color: Colors.black
-      //   ),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-
     );
   }
 
