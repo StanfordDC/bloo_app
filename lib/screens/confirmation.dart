@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:bloo_app/widgets/textDisplay.dart';
+import 'package:bloo_app/models/wasteType.dart';
 
 class Confirmation extends StatefulWidget {
   const Confirmation({super.key});
@@ -16,6 +17,7 @@ class _ConfirmationState extends State<Confirmation> {
   late String imagePath;
   bool confirmed = false;
   String wasteType = "";
+  late List<WasteType> list;
 
   String convert(String imagePath){
     List<int> imageBytes = File(imagePath).readAsBytesSync();
