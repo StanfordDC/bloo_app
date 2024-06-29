@@ -13,7 +13,6 @@ Future<void> main() async {
 
   final cameras = await availableCameras();
   final firstCamera = cameras.first;
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(MaterialApp(
       initialRoute: '/',
