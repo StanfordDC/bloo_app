@@ -77,11 +77,6 @@ class _RecycleState extends State<Recycle> {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             GestureDetector(
-              // child: Icon(
-              //   Icons.camera_alt,
-              //   color: Colors.black,
-              // ),
-              // backgroundColor: Color.fromRGBO(255, 255, 255, .7),
                onTap: () async{
                 try{
                   await cameraValue;
@@ -97,17 +92,17 @@ class _RecycleState extends State<Recycle> {
                   }
               },
               child: Container(
-                width: 70.0,
-                height: 70.0,
+                width: 80.0,
+                height: 80.0,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 5.0),
+                  border: Border.all(color: Colors.white, width: 3.0),
                   color: Colors.transparent,
                 ),
                 child: Center(
                   child: Container(
-                    width: 60.0,
-                    height: 60.0,
+                    width: 68.0,
+                    height: 68.0,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.white,
