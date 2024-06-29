@@ -96,13 +96,13 @@ class _RecycleState extends State<Recycle> {
                 height: 80.0,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3.0),
+                  border: Border.all(color: Colors.white, width: 4.0),
                   color: Colors.transparent,
                 ),
                 child: Center(
                   child: Container(
-                    width: 68.0,
-                    height: 68.0,
+                    width: 65.0,
+                    height: 65.0,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.white,
