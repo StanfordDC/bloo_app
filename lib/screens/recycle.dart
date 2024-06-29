@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 class Recycle extends StatefulWidget {
   final CameraDescription camera;
   const Recycle({super.key, required this.camera});
@@ -26,8 +27,18 @@ class _RecycleState extends State<Recycle> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.black,
+        statusBarIconBrightness: Brightness.light,
+      ),
+    );
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        automaticallyImplyLeading: false,
+      ),
       body: Stack(
         children:[
           FutureBuilder(future: cameraValue, builder: (context, snapshot){
@@ -48,7 +59,7 @@ class _RecycleState extends State<Recycle> {
               return const Center(child: CircularProgressIndicator(),);
             }
           }),
-           Align(
+          Align(
             alignment: Alignment.bottomCenter,
             child: Container(
               height: 150,
