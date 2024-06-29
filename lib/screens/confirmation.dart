@@ -25,6 +25,7 @@ class _ConfirmationState extends State<Confirmation> {
   }
 
   void getType(String base64) async {
+    final startTime = DateTime.now();
     final response = await http.post(
       Uri.parse('https://blooapp-nakavwocwa-et.a.run.app/api/vision'),
       headers: <String, String>{
@@ -34,12 +35,19 @@ class _ConfirmationState extends State<Confirmation> {
         'base64_image': base64,
       }),
     );
-    print(response.statusCode);
+    final endTime = DateTime.now();
+    final duration = endTime.difference(startTime).inMilliseconds;
+
+    print('Response time: $duration ms');
     if (response.statusCode == 200) {
       Map data = jsonDecode(response.body);
       setState(() {
-        list.addAll((data['from_database'] as List).map((item) => WasteType.fromJson(item)).toList());
-        list.addAll((data['from_llm'] as List).map((item) => WasteType.fromJson(item)).toList());
+        if(data['from_database'].length != 0){
+          list.addAll((data['from_database'] as List).map((item) => WasteType.fromJson(item)).toList());
+        }
+        if(data['from_llm'].length != 0){
+           list.addAll((data['from_llm'] as List).map((item) => WasteType.fromJson(item)).toList());
+        }
         wasteType = list[0].item;
       });
     } else {

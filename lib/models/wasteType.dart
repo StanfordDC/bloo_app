@@ -12,6 +12,6 @@ class WasteType{
       item = json['item'] ?? '',
       recyclable = json['recyclable'] ?? '',
       instructions = json['instructions'] ?? '',
-      link = json.containsKey('links') ? json['links'][0] : '';
+      link = json.containsKey('links') && json['links'].length != 0 ? json['links'][0] : '';
   
 }
