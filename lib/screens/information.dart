@@ -100,19 +100,11 @@ class _InformationState extends State<Information> {
           child: Card(
             elevation: 3,
             child: ListTile(
-              title: Text(
-                wasteType.item,
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
+              title: TextDisplay(Colors.black, wasteType.item.toUpperCase(), 20),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Material: ${wasteType.material}'),
-                  Text('Recyclable: ${wasteType.recyclable ? 'Yes' : 'No'}'),
+                  Text('Recyclable: ${wasteType.recyclable ? 'YES' : 'NO'}'),
                   Text('Instructions: ${wasteType.instructions}'),
                 ],
               ),
