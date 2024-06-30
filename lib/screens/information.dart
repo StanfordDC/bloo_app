@@ -16,6 +16,7 @@ class _InformationState extends State<Information> {
   late String imagePath;
   List<WasteType> list = [];
   bool fetching = true;
+  int count = 0;
 
    String convert(String imagePath){
     List<int> imageBytes = File(imagePath).readAsBytesSync();
@@ -36,11 +37,13 @@ class _InformationState extends State<Information> {
     final endTime = DateTime.now();
     final duration = endTime.difference(startTime).inMilliseconds;
 
+    print(count);
     print('Response time: $duration ms');
     if (response.statusCode == 200) {
       Map data = jsonDecode(response.body);
       setState(() {
         fetching = false;
+        count++;
         if(data['from_database'].length != 0){
           list.addAll((data['from_database'] as List).map((item) => WasteType.fromJson(item)).toList());
         }
@@ -55,15 +58,18 @@ class _InformationState extends State<Information> {
 
   @override
   Widget build(BuildContext context) {
-    imagePath = ModalRoute.of(context)!.settings.arguments as String;
-    var base64 = convert(imagePath);
-    getType(base64);
+    if(fetching){
+      imagePath = ModalRoute.of(context)!.settings.arguments as String;
+      var base64 = convert(imagePath);
+      getType(base64);
+    }
     return Scaffold(
         appBar: AppBar(
           title: const TextDisplay(Colors.black, "Detected Objects", 20.0),
           centerTitle: true),
         body: SingleChildScrollView(
-            child: const TextDisplay(Colors.black, "Detected Objects", 20.0),
+            child: fetching ? CircularProgressIndicator(): 
+             TextDisplay(Colors.black, list[0].item, 20.0),
         )
     );
   }
