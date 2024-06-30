@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bloo_app/widgets/textDisplay.dart';
+import 'package:bloo_app/models/wasteType.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Information extends StatefulWidget {
   const Information({super.key});

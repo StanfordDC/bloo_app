@@ -1,9 +1,6 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:bloo_app/widgets/textDisplay.dart';
-import 'package:bloo_app/models/wasteType.dart';
 
 class Confirmation extends StatefulWidget {
   const Confirmation({super.key});
@@ -104,46 +101,6 @@ class _ConfirmationState extends State<Confirmation> {
             ),
           ),
         ]
-    );
-  }
-
-  Column buildButtons(){
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 5.0),
-          child: SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-                onPressed: (){Navigator.pushReplacementNamed(context, '/information', arguments: wasteType);},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6.0), // Set the rounded corners
-                  ),
-                ),
-                child: const TextDisplay(Colors.white, "Yes", 25.0)
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 5.0),
-          child: SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-                onPressed: (){Navigator.pushReplacementNamed(context, '/feedbacks');},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6.0), // Set the rounded corners
-                  ),
-                ),
-                child: const TextDisplay(Colors.black, "No", 25.0)
-            ),
-          ),
-        ),
-      ]
     );
   }
 }
