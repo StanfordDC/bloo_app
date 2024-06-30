@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bloo_app/widgets/textDisplay.dart';
 import 'package:bloo_app/models/wasteType.dart';
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class Information extends StatefulWidget {
@@ -13,10 +14,8 @@ class Information extends StatefulWidget {
 
 class _InformationState extends State<Information> {
   late String imagePath;
-  late String wasteType;
-  List<String> instructions = ["Waste type has not been categorized"];
-  bool canBePlaced = true;
-  bool exist = false;
+  List<WasteType> list = [];
+  bool fetching = true;
 
    String convert(String imagePath){
     List<int> imageBytes = File(imagePath).readAsBytesSync();
@@ -41,119 +40,96 @@ class _InformationState extends State<Information> {
     if (response.statusCode == 200) {
       Map data = jsonDecode(response.body);
       setState(() {
+        fetching = false;
         if(data['from_database'].length != 0){
           list.addAll((data['from_database'] as List).map((item) => WasteType.fromJson(item)).toList());
         }
         if(data['from_llm'].length != 0){
            list.addAll((data['from_llm'] as List).map((item) => WasteType.fromJson(item)).toList());
         }
-        wasteType = list[0].item;
       });
     } else {
       throw Exception(response);
     }
   }
 
-  // void insert(String wasteType) async{
-  //   var collection = FirebaseFirestore.instance.collection('wasteType');
-  //   var querySnapshot = await collection.get();
-  //   for (var queryDocumentSnapshot in querySnapshot.docs) {
-  //     Map<String, dynamic> data = queryDocumentSnapshot.data();
-  //     var name = data['item'];
-  //     if(name == wasteType){
-  //       String description = data['instructions'];
-  //       List<String> temp = description.split('<br/>');
-  //       setState(() {
-  //         instructions = [];
-  //         for(String instruction in temp){
-  //           String curr = instruction.trim();
-  //           if(curr.isNotEmpty){
-  //             instructions.add(curr);
-  //           }
-  //         }
-  //         canBePlaced = data['recyclable'];
-  //         exist = true;
-  //       });
-  //     }
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
-    wasteType = ModalRoute.of(context)!.settings.arguments as String;
-    insert(wasteType);
+    imagePath = ModalRoute.of(context)!.settings.arguments as String;
+    var base64 = convert(imagePath);
+    getType(base64);
     return Scaffold(
         appBar: AppBar(
-          title: const TextDisplay(Colors.black, "Information", 20.0),
+          title: const TextDisplay(Colors.black, "Detected Objects", 20.0),
           centerTitle: true),
         body: SingleChildScrollView(
-          child: buildColumn()
+            child: const TextDisplay(Colors.black, "Detected Objects", 20.0),
         )
     );
   }
 
 
-  Column buildColumn(){
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          const Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-              child: TextContainer(TextDisplay(Colors.black, "Waste Type", 20.0)),
-          ),
-          Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 12.0),
-              child: TextContainer(TextDisplay(Colors.black, wasteType, 20.0)),
-          ),
-          const TextContainer(TextDisplay(Colors.black, "Recyclability Status", 20.0)),
-          if(!exist)
-            const Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 12.0),
-              child: TextContainer(TextDisplay(Colors.black, "NA", 20.0)),
-            ),
-          if(exist && canBePlaced)
-            const Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 12.0),
-              child: TextContainer(TextDisplay(Colors.green, "RECYCLABLE", 20.0)),
-            ),
-          if(exist && !canBePlaced)
-            const Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 12.0),
-              child: TextContainer(TextDisplay(Colors.red, "NOT RECYCLABLE", 20.0)),
-            ),
-          const TextContainer(TextDisplay(Colors.black, "Instruction", 20.0)),
-          Container(
-            width: double.infinity,
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6.0), // Set the rounded corners
-              ),
-              color: Colors.white54,
-              elevation: 1.0,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-                    child: TextDisplay(Colors.black, "", 0.0),
-                  ),
-                  if(isLowerCase(instructions[0][0].trim()))
-                    TextContainer(TextDisplay(Colors.black87, '$wasteType ${instructions[0]}', 15.0)),
-                  if(!isLowerCase(instructions[0][0].trim()))
-                    TextContainer(TextDisplay(Colors.black87, instructions[0], 15.0)),
-                  for(var i = 1 ; i < instructions.length ; i++)
-                    TextContainer(TextDisplay(Colors.black87, instructions[i], 15.0)),
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
-                    child: TextDisplay(Colors.black, "", 0.0),
-                  )
-                ]
-              ),
-            ),
-          ),
-        ]
-      );
-  }
+  // Column buildColumn(){
+  //   return Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: <Widget>[
+  //         const Padding(
+  //             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+  //             child: TextContainer(TextDisplay(Colors.black, "Waste Type", 20.0)),
+  //         ),
+  //         Padding(
+  //             padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 12.0),
+  //             child: TextContainer(TextDisplay(Colors.black, wasteType, 20.0)),
+  //         ),
+  //         const TextContainer(TextDisplay(Colors.black, "Recyclability Status", 20.0)),
+  //         if(!exist)
+  //           const Padding(
+  //             padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 12.0),
+  //             child: TextContainer(TextDisplay(Colors.black, "NA", 20.0)),
+  //           ),
+  //         if(exist && canBePlaced)
+  //           const Padding(
+  //             padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 12.0),
+  //             child: TextContainer(TextDisplay(Colors.green, "RECYCLABLE", 20.0)),
+  //           ),
+  //         if(exist && !canBePlaced)
+  //           const Padding(
+  //             padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 12.0),
+  //             child: TextContainer(TextDisplay(Colors.red, "NOT RECYCLABLE", 20.0)),
+  //           ),
+  //         const TextContainer(TextDisplay(Colors.black, "Instruction", 20.0)),
+  //         Container(
+  //           width: double.infinity,
+  //           child: Card(
+  //             shape: RoundedRectangleBorder(
+  //               borderRadius: BorderRadius.circular(6.0), // Set the rounded corners
+  //             ),
+  //             color: Colors.white54,
+  //             elevation: 1.0,
+  //             child: Column(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: <Widget>[
+  //                 const Padding(
+  //                   padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+  //                   child: TextDisplay(Colors.black, "", 0.0),
+  //                 ),
+  //                 if(isLowerCase(instructions[0][0].trim()))
+  //                   TextContainer(TextDisplay(Colors.black87, '$wasteType ${instructions[0]}', 15.0)),
+  //                 if(!isLowerCase(instructions[0][0].trim()))
+  //                   TextContainer(TextDisplay(Colors.black87, instructions[0], 15.0)),
+  //                 for(var i = 1 ; i < instructions.length ; i++)
+  //                   TextContainer(TextDisplay(Colors.black87, instructions[i], 15.0)),
+  //                 const Padding(
+  //                   padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
+  //                   child: TextDisplay(Colors.black, "", 0.0),
+  //                 )
+  //               ]
+  //             ),
+  //           ),
+  //         ),
+  //       ]
+  //     );
+  // }
 
 
   bool isLowerCase(String input) {
