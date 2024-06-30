@@ -58,23 +58,19 @@ class _ConfirmationState extends State<Confirmation> {
   @override
   Widget build(BuildContext context) {
     imagePath = ModalRoute.of(context)!.settings.arguments as String;
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
-      body: SafeArea(
+      body: Container(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                  image: FileImage(File(imagePath)) as ImageProvider,
-                fit: BoxFit.cover,
-              )
+             Expanded(
+              flex: 2,
+              child: Image.file(File(imagePath),fit: BoxFit.cover,),
             ),
-            margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
-            height: 350,
-            width: 400,),
             if(!confirmed)
               buildRow()
             else if(confirmed && wasteType != "")

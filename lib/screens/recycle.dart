@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 class Recycle extends StatefulWidget {
   final CameraDescription camera;
   const Recycle({super.key, required this.camera});
@@ -39,43 +40,41 @@ class _RecycleState extends State<Recycle> {
         backgroundColor: Colors.black,
         automaticallyImplyLeading: false,
       ),
-      body: Stack(
-        children:[
-          FutureBuilder(future: cameraValue, builder: (context, snapshot){
-            if(snapshot.connectionState == ConnectionState.done){
-              return SizedBox(
-                width: size.width,
-                height: size.height,
-                child: FittedBox(
-                  fit: BoxFit.cover,
-                  child: SizedBox(
-                    width: 100,
-                    child: CameraPreview(cameraController),
+      body: Container(
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children:[
+              FutureBuilder(future: cameraValue, builder: (context, snapshot){
+                if(snapshot.connectionState == ConnectionState.done){
+                  return Expanded(
+                    flex: 1,
+                    child: cameraPreviewWidget(),
+                  );
+                }
+                else{
+                  return const Center(child: CircularProgressIndicator(),);
+                }
+              }),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: 150,
+                  width: double.infinity,
+                  padding: EdgeInsets.all(15),
+                  color: Colors.black,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      cameraControlWidget(context),
+                    ],
                   ),
                 ),
-              );
-            }
-            else{
-              return const Center(child: CircularProgressIndicator(),);
-            }
-          }),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              height: 150,
-              width: double.infinity,
-              padding: EdgeInsets.all(15),
-              color: Colors.black,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  cameraControlWidget(context),
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
+              )
+            ],
+          ),
+        )
+      )
     );
   }
 
@@ -127,4 +126,12 @@ class _RecycleState extends State<Recycle> {
       ),
     );
   }
+
+  Widget cameraPreviewWidget() {
+    return AspectRatio(
+      aspectRatio: cameraController.value.aspectRatio,
+      child: CameraPreview(cameraController),
+    );
+  }
+
 }
