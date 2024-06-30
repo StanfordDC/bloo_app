@@ -14,7 +14,9 @@ class Confirmation extends StatefulWidget {
 
 class _ConfirmationState extends State<Confirmation> {
 
+  late var arguments;
   late String imagePath;
+  late double aspectRatio;
   bool confirmed = false;
   String wasteType = "";
   List<WasteType> list = [];
@@ -57,7 +59,9 @@ class _ConfirmationState extends State<Confirmation> {
 
   @override
   Widget build(BuildContext context) {
-    imagePath = ModalRoute.of(context)!.settings.arguments as String;
+    arguments = ModalRoute.of(context)!.settings.arguments as Map;
+    imagePath = arguments['imagePath'];
+    aspectRatio = arguments['aspectRatio'];
     return Scaffold(
       appBar: AppBar(),
       // The image is stored as a file on the device. Use the `Image.file`
@@ -66,10 +70,10 @@ class _ConfirmationState extends State<Confirmation> {
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-                Expanded(
-                flex: 2,
-                child: Image.file(File(imagePath),fit: BoxFit.cover,),
+            children: [
+              Expanded(
+                flex: 1,
+                child: imagePreview(),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
@@ -92,6 +96,13 @@ class _ConfirmationState extends State<Confirmation> {
           )
         )
       );
+  }
+
+  Widget imagePreview() {
+    return AspectRatio(
+      aspectRatio: aspectRatio,
+      child: Image.file(File(imagePath),fit:BoxFit.cover)
+    );
   }
 
   Column buildRow(){

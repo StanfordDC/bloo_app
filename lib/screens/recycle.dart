@@ -48,7 +48,7 @@ class _RecycleState extends State<Recycle> {
                 if(snapshot.connectionState == ConnectionState.done){
                   return Expanded(
                     flex: 1,
-                    child: cameraPreviewWidget(),
+                    child: CameraPreview(cameraController),
                   );
                 }
                 else{
@@ -94,7 +94,8 @@ class _RecycleState extends State<Recycle> {
                   if (!context.mounted) return;
 
                   // If the picture was taken, display it on a new screen.
-                  Navigator.pushReplacementNamed(context, '/confirmation', arguments: image.path);
+                  Navigator.pushReplacementNamed(context, '/confirmation', 
+                    arguments: {'imagePath' : image.path, 'aspectRatio' : cameraController.value.aspectRatio});
                   } catch (e) {
                   // If an error occurs, log the error to the console.
                   print(e);
