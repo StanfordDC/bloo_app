@@ -63,23 +63,35 @@ class _ConfirmationState extends State<Confirmation> {
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
       body: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-             Expanded(
-              flex: 2,
-              child: Image.file(File(imagePath),fit: BoxFit.cover,),
-            ),
-            if(!confirmed)
-              buildRow()
-            else if(confirmed && wasteType != "")
-              buildColumn()
-            else
-              const CircularProgressIndicator()
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+                Expanded(
+                flex: 2,
+                child: Image.file(File(imagePath),fit: BoxFit.cover,),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  width: double.infinity,
+                  height: 150.0,
+                  child: Center(
+                    child: buildRow()
+                  )
+                )
+              ),
+            // if(!confirmed)
+            //   buildRow()
+            // else if(confirmed && wasteType != "")
+            //   buildColumn()
+            // else
+            //   const CircularProgressIndicator()
               ]
             )
           )
-        );
+        )
+      );
   }
 
   Column buildRow(){
