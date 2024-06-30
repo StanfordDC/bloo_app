@@ -63,7 +63,10 @@ class _ConfirmationState extends State<Confirmation> {
     imagePath = arguments['imagePath'];
     aspectRatio = arguments['aspectRatio'];
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title:  TextDisplay(Colors.black, "Preview", 25.0),
+        centerTitle: true,
+      ),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
       body: Container(
@@ -73,7 +76,10 @@ class _ConfirmationState extends State<Confirmation> {
             children: [
               Expanded(
                 flex: 1,
-                child: imagePreview(),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(25.0), // Adjust the radius as needed
+                  child: imagePreview(),
+                ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
@@ -107,7 +113,7 @@ class _ConfirmationState extends State<Confirmation> {
 
   Column buildRow(){
     return Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 5.0),
@@ -115,7 +121,7 @@ class _ConfirmationState extends State<Confirmation> {
               width: double.infinity,
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
+                    backgroundColor: Color.fromARGB(255, 97, 199, 82),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6.0), // Set the rounded corners
                     ),
@@ -125,22 +131,23 @@ class _ConfirmationState extends State<Confirmation> {
                     String base64 = convert(imagePath);
                     getType(base64);
                   });},
-                  child: const TextDisplay(Colors.black, "Confirm", 25.0)),
+                  child: const TextDisplay(Colors.white, "Confirm", 25.0)),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 5.0),
-            child: SizedBox(
+            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+            child: SizedBox( 
               width: double.infinity,
               child:  ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black87,
+                    backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6.0), // Set the rounded corners
+                      borderRadius: BorderRadius.circular(6.0),
+                      side: BorderSide(color: Colors.black), // Set the rounded corners
                     ),
                   ),
                   onPressed: (){Navigator.pushReplacementNamed(context, '/recycle');},
-                  child: const TextDisplay(Colors.white, "Retake", 25.0)),
+                  child: const TextDisplay(Colors.black, "Retake", 25.0)),
             ),
           ),
         ]
