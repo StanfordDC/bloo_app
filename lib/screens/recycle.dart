@@ -34,7 +34,6 @@ class _RecycleState extends State<Recycle> {
         statusBarIconBrightness: Brightness.light,
       ),
     );
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,

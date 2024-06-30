@@ -58,7 +58,6 @@ class _ConfirmationState extends State<Confirmation> {
   @override
   Widget build(BuildContext context) {
     imagePath = ModalRoute.of(context)!.settings.arguments as String;
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(),
       // The image is stored as a file on the device. Use the `Image.file`
