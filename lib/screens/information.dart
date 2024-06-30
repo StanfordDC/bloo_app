@@ -66,7 +66,14 @@ class _InformationState extends State<Information> {
     return Scaffold(
         appBar: AppBar(
           title: const TextDisplay(Colors.black, "Detected Objects", 20.0),
-          centerTitle: true),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.home, size: 30), 
+            onPressed: () {
+              Navigator.popUntil(context, ModalRoute.withName('/'));
+            },
+          ),
+        ),
         body: SingleChildScrollView(
             child: fetching ? CircularProgressIndicator(): 
              TextDisplay(Colors.black, list[0].item, 20.0),
