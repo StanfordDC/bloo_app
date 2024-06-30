@@ -65,10 +65,11 @@ class _InformationState extends State<Information> {
     }
     return Scaffold(
         appBar: AppBar(
-          title: const TextDisplay(Colors.black, "Detected Objects", 20.0),
+          backgroundColor: Color.fromRGBO(0,195,0,1),
+          title: const TextDisplay(Colors.white, "Detected Objects", 20.0),
           centerTitle: true,
           leading: IconButton(
-            icon: Icon(Icons.home, size: 30), 
+            icon: Icon(Icons.home, size: 30, color: Colors.white), 
             onPressed: () {
               Navigator.popUntil(context, ModalRoute.withName('/'));
             },
