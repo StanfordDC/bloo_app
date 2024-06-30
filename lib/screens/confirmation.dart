@@ -113,21 +113,6 @@ class _ConfirmationState extends State<Confirmation> {
             padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 5.0),
             child: SizedBox(
               width: double.infinity,
-              child:  ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black87,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6.0), // Set the rounded corners
-                    ),
-                  ),
-                  onPressed: (){Navigator.pushReplacementNamed(context, '/recycle');},
-                  child: const TextDisplay(Colors.white, "Retake", 25.0)),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 5.0),
-            child: SizedBox(
-              width: double.infinity,
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
@@ -141,6 +126,21 @@ class _ConfirmationState extends State<Confirmation> {
                     getType(base64);
                   });},
                   child: const TextDisplay(Colors.black, "Confirm", 25.0)),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 5.0),
+            child: SizedBox(
+              width: double.infinity,
+              child:  ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black87,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6.0), // Set the rounded corners
+                    ),
+                  ),
+                  onPressed: (){Navigator.pushReplacementNamed(context, '/recycle');},
+                  child: const TextDisplay(Colors.white, "Retake", 25.0)),
             ),
           ),
         ]
