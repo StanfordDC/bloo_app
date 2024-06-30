@@ -16,29 +16,65 @@ class _InformationState extends State<Information> {
   bool canBePlaced = true;
   bool exist = false;
 
-  void insert(String wasteType) async{
-    var collection = FirebaseFirestore.instance.collection('wasteType');
-    var querySnapshot = await collection.get();
-    for (var queryDocumentSnapshot in querySnapshot.docs) {
-      Map<String, dynamic> data = queryDocumentSnapshot.data();
-      var name = data['item'];
-      if(name == wasteType){
-        String description = data['instructions'];
-        List<String> temp = description.split('<br/>');
-        setState(() {
-          instructions = [];
-          for(String instruction in temp){
-            String curr = instruction.trim();
-            if(curr.isNotEmpty){
-              instructions.add(curr);
-            }
-          }
-          canBePlaced = data['recyclable'];
-          exist = true;
-        });
-      }
+   String convert(String imagePath){
+    List<int> imageBytes = File(imagePath).readAsBytesSync();
+    return base64Encode(imageBytes);
+  }
+
+  void getType(String base64) async {
+    final startTime = DateTime.now();
+    final response = await http.post(
+      Uri.parse('https://blooapp-nakavwocwa-et.a.run.app/api/vision'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'base64_image': base64,
+      }),
+    );
+    final endTime = DateTime.now();
+    final duration = endTime.difference(startTime).inMilliseconds;
+
+    print('Response time: $duration ms');
+    if (response.statusCode == 200) {
+      Map data = jsonDecode(response.body);
+      setState(() {
+        if(data['from_database'].length != 0){
+          list.addAll((data['from_database'] as List).map((item) => WasteType.fromJson(item)).toList());
+        }
+        if(data['from_llm'].length != 0){
+           list.addAll((data['from_llm'] as List).map((item) => WasteType.fromJson(item)).toList());
+        }
+        wasteType = list[0].item;
+      });
+    } else {
+      throw Exception(response);
     }
   }
+
+  // void insert(String wasteType) async{
+  //   var collection = FirebaseFirestore.instance.collection('wasteType');
+  //   var querySnapshot = await collection.get();
+  //   for (var queryDocumentSnapshot in querySnapshot.docs) {
+  //     Map<String, dynamic> data = queryDocumentSnapshot.data();
+  //     var name = data['item'];
+  //     if(name == wasteType){
+  //       String description = data['instructions'];
+  //       List<String> temp = description.split('<br/>');
+  //       setState(() {
+  //         instructions = [];
+  //         for(String instruction in temp){
+  //           String curr = instruction.trim();
+  //           if(curr.isNotEmpty){
+  //             instructions.add(curr);
+  //           }
+  //         }
+  //         canBePlaced = data['recyclable'];
+  //         exist = true;
+  //       });
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

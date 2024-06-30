@@ -17,45 +17,6 @@ class _ConfirmationState extends State<Confirmation> {
   late var arguments;
   late String imagePath;
   late double aspectRatio;
-  bool confirmed = false;
-  String wasteType = "";
-  List<WasteType> list = [];
-
-  String convert(String imagePath){
-    List<int> imageBytes = File(imagePath).readAsBytesSync();
-    return base64Encode(imageBytes);
-  }
-
-  void getType(String base64) async {
-    final startTime = DateTime.now();
-    final response = await http.post(
-      Uri.parse('https://blooapp-nakavwocwa-et.a.run.app/api/vision'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'base64_image': base64,
-      }),
-    );
-    final endTime = DateTime.now();
-    final duration = endTime.difference(startTime).inMilliseconds;
-
-    print('Response time: $duration ms');
-    if (response.statusCode == 200) {
-      Map data = jsonDecode(response.body);
-      setState(() {
-        if(data['from_database'].length != 0){
-          list.addAll((data['from_database'] as List).map((item) => WasteType.fromJson(item)).toList());
-        }
-        if(data['from_llm'].length != 0){
-           list.addAll((data['from_llm'] as List).map((item) => WasteType.fromJson(item)).toList());
-        }
-        wasteType = list[0].item;
-      });
-    } else {
-      throw Exception(response);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,10 +52,6 @@ class _ConfirmationState extends State<Confirmation> {
                   )
                 )
               ),
-            // if(!confirmed)
-            //   buildRow()
-            // else if(confirmed && wasteType != "")
-            //   buildColumn()
             // else
             //   const CircularProgressIndicator()
               ]
@@ -126,11 +83,7 @@ class _ConfirmationState extends State<Confirmation> {
                       borderRadius: BorderRadius.circular(6.0), // Set the rounded corners
                     ),
                   ),
-                  onPressed: (){ setState(() {
-                    confirmed = true;
-                    String base64 = convert(imagePath);
-                    getType(base64);
-                  });},
+                  onPressed: (){Navigator.pushReplacementNamed(context, '/information', arguments: imagePath);},
                   child: const TextDisplay(Colors.white, "Confirm", 25.0)),
             ),
           ),
@@ -151,17 +104,6 @@ class _ConfirmationState extends State<Confirmation> {
             ),
           ),
         ]
-    );
-  }
-
-  Column buildColumn(){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget> [
-        TextContainer(TextDisplay(Colors.black, "Detected: $wasteType", 25.0)),
-        TextContainer(TextDisplay(Colors.black, "Is this a $wasteType?", 25.0)),
-        buildButtons()
-      ]
     );
   }
 
