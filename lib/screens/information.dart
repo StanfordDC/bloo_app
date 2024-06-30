@@ -74,34 +74,62 @@ class _InformationState extends State<Information> {
             },
           ),
         ),
-        body: SingleChildScrollView(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children:[
-                  if(fetching)
-                    Center(
-                      child: Column(
-                        children: [
-                          LinearProgressIndicator(
-                            color: Color.fromARGB(255, 97, 199, 82),
-                            backgroundColor: Color.fromARGB(255, 169, 194, 165),
-                          ),
-                          const TextDisplay(Colors.black, 'Loading...', 25)
-                        ],
-                      ) 
-                    ),
-                  if(list.isNotEmpty)
-                    TextDisplay(Colors.black, list[0].item, 20.0),
-                ]
-              )
+        body: Center(
+          child: fetching ? Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                LinearProgressIndicator(
+                  color: Color.fromARGB(255, 97, 199, 82),
+                  backgroundColor: Color.fromARGB(255, 169, 194, 165),
+                ),
+                const TextDisplay(Colors.black, 'Loading...', 25),
+              ],
             )
+          : wasteTypeList()
         )
-    );
+      );
   }
 
-
+  ListView wasteTypeList(){
+    return ListView.builder(
+      itemCount: list.length,
+      itemBuilder: (context, index) {
+        WasteType wasteType = list[index];
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Card(
+            elevation: 3,
+            child: ListTile(
+              title: Text(
+                wasteType.item,
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Material: ${wasteType.material}'),
+                  Text('Recyclable: ${wasteType.recyclable ? 'Yes' : 'No'}'),
+                  Text('Instructions: ${wasteType.instructions}'),
+                ],
+              ),
+              trailing: IconButton(
+                icon: Icon(Icons.link),
+                onPressed: () {
+                  // Handle link navigation here
+                  // Example: launch URL
+                  // launch(wasteType.link);
+                },
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
   // Column buildColumn(){
   //   return Column(
   //       crossAxisAlignment: CrossAxisAlignment.start,
