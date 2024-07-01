@@ -21,8 +21,11 @@ class _ConfirmationState extends State<Confirmation> {
     imagePath = arguments['imagePath'];
     aspectRatio = arguments['aspectRatio'];
     return Scaffold(
+      backgroundColor: Color.fromRGBO(241,253, 240,1),
       appBar: AppBar(
+        backgroundColor: Color.fromRGBO(241,253, 240,1),
         title:  TextDisplay(Colors.black, "Preview", 25.0),
+        automaticallyImplyLeading: false,
         centerTitle: true,
       ),
       // The image is stored as a file on the device. Use the `Image.file`
@@ -75,7 +78,7 @@ class _ConfirmationState extends State<Confirmation> {
               width: double.infinity,
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 97, 199, 82),
+                    backgroundColor: Color.fromRGBO(37,194,38,1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6.0), // Set the rounded corners
                     ),

@@ -95,6 +95,30 @@ class _InformationState extends State<Information> {
       );
   }
 
+   Column recycleButton(){
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+            child: SizedBox( 
+              width: double.infinity,
+              child:  ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6.0),
+                      side: BorderSide(color: Colors.black), // Set the rounded corners
+                    ),
+                  ),
+                  onPressed: (){Navigator.pushReplacementNamed(context, '/recycle');},
+                  child: const TextDisplay(Colors.black, "Retake", 25.0)),
+            ),
+          ),
+        ]
+    );
+  }
+
   ListView wasteTypeList(){
     return ListView.builder(
       itemCount: list.length,
