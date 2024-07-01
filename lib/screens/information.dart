@@ -111,16 +111,8 @@ class _InformationState extends State<Information> {
                 children: [
                   Text('Recyclable: ${wasteType.recyclable ? 'YES' : 'NO'}'),
                   Text('Instructions: ${wasteType.instructions}'),
-                  responseButtons(index, isLiked, isDisliked)
+                  responseButtons(wasteType.link, index, isLiked, isDisliked)
                 ],
-              ),
-              trailing: IconButton(
-                icon: Icon(Icons.link),
-                onPressed: () {
-                  // Handle link navigation here
-                  // Example: launch URL
-                  // launch(wasteType.link);
-                },
               ),
             ),
           ),
@@ -129,7 +121,7 @@ class _InformationState extends State<Information> {
     );
   }
 
-  Row responseButtons(int index, bool isLiked, bool isDisliked){
+  Row responseButtons(String link, int index, bool isLiked, bool isDisliked){
     return Row(
       children: [
         IconButton(
@@ -159,6 +151,15 @@ class _InformationState extends State<Information> {
             });
           },
         ),
+        if(link.length > 0)
+          IconButton(
+            icon: Icon(Icons.link, color: Colors.grey, size: 30),
+            onPressed: () {
+              // Handle link navigation here
+              // Example: launch URL
+              // launch(wasteType.link);
+            },
+          ),
       ],
     );
   }
