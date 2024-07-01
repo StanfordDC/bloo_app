@@ -104,8 +104,9 @@ class _InformationState extends State<Information> {
         return Padding(
           padding: const EdgeInsets.all(5.0),
           child: Card(
-            elevation: 3,
+            elevation: 5,
             child: ListTile(
+              tileColor: Color.fromRGBO(189,246, 188,0),
               title: TextDisplay(Colors.black, wasteType.item.toUpperCase(), 20),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,7 +134,6 @@ class _InformationState extends State<Information> {
   }
 
   Widget processInstructions(String instructions) {
-    print(instructions);
     List<String> temp = instructions.split('•');
     temp = temp.map((part) => part.trim()).toList();
     List<Widget> instructionWidgets = [];
@@ -152,13 +152,14 @@ class _InformationState extends State<Information> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                width: 8,
+                width: 5,
                 child: Text('•'),
               ),
-              SizedBox(width: 8),
+              SizedBox(width: 5),
               Expanded(
                 child: Text(
                   instruction,
+                  textAlign : TextAlign.justify
                 ),
               ),
             ],
@@ -220,13 +221,5 @@ class _InformationState extends State<Information> {
     } else {
       throw 'Could not launch $link';
     }
-  }
-
-  bool isLowerCase(String input) {
-    if (input.isEmpty) {
-      return false; // An empty string does not have a first character.
-    }
-    String firstChar = input[0];
-    return firstChar == firstChar.toLowerCase() && firstChar != firstChar.toUpperCase();
   }
 }
