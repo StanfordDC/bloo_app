@@ -43,7 +43,7 @@ class _InformationState extends State<Information> {
     print(count);
     print('Response time: $duration ms');
     if (response.statusCode == 200) {
-      Map data = jsonDecode(response.body);
+      Map data = json.decode(utf8.decode(response.bodyBytes));
       setState(() {
         fetching = false;
         count++;
@@ -102,7 +102,7 @@ class _InformationState extends State<Information> {
         bool isLiked = likedIndexes.contains(index);
         bool isDisliked = dislikedIndexes.contains(index);
         return Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(5.0),
           child: Card(
             elevation: 3,
             child: ListTile(
@@ -110,8 +110,18 @@ class _InformationState extends State<Information> {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Recyclable: ${wasteType.recyclable ? 'YES' : 'NO'}'),
-                  Text('Instructions: ${wasteType.instructions}'),
+                  SizedBox(height: 5),
+                  Text(wasteType.recyclable ? 'RECYCLABLE' : 'NOT RECYCLABLE',  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: wasteType.recyclable ? Colors.green : Colors.red,
+                  ),),
+                  SizedBox(height: 5),
+                  Text('Recycling Instructions', style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),),
+                  SizedBox(height: 5),
+                  processInstructions(wasteType.instructions),
                   responseButtons(wasteType.link, index, isLiked, isDisliked)
                 ],
               ),
@@ -119,6 +129,47 @@ class _InformationState extends State<Information> {
           ),
         );
       },
+    );
+  }
+
+  Widget processInstructions(String instructions) {
+    print(instructions);
+    List<String> temp = instructions.split('•');
+    temp = temp.map((part) => part.trim()).toList();
+    List<Widget> instructionWidgets = [];
+
+    for (int i = 0; i < temp.length; i++) {
+      String instruction = temp[i].trim();
+      if (instruction.isNotEmpty) {
+        if (i == 0) {
+          // First instruction, no bullet point needed
+          instructionWidgets.add(Text(
+            instruction, textAlign: TextAlign.justify,
+          ));
+        } else {
+          // Subsequent instructions with bullet points
+          instructionWidgets.add(Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 8,
+                child: Text('•'),
+              ),
+              SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  instruction,
+                ),
+              ),
+            ],
+          ));
+        }
+      }
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: instructionWidgets,
     );
   }
 
