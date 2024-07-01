@@ -56,55 +56,7 @@ class _RecycleState extends State<Recycle> {
     );
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   SystemChrome.setSystemUIOverlayStyle(
-  //     SystemUiOverlayStyle(
-  //       statusBarColor: Colors.black,
-  //       statusBarIconBrightness: Brightness.light,
-  //     ),
-  //   );
-  //   return Scaffold(
-  //     // appBar: AppBar(
-  //     //   backgroundColor: Colors.black,
-  //     //   automaticallyImplyLeading: false,
-  //     // ),
-  //     body: Container(
-  //       child: SafeArea(
-  //         child: Column(
-  //           crossAxisAlignment: CrossAxisAlignment.stretch,
-  //           children:[
-  //             FutureBuilder(future: cameraValue, builder: (context, snapshot){
-  //               if(snapshot.connectionState == ConnectionState.done){
-  //                 return cameraWidget(context);
-  //               }
-  //               else{
-  //                 return const Center(child: CircularProgressIndicator(),);
-  //               }
-  //             }),
-  //             Align(
-  //               alignment: Alignment.bottomCenter,
-  //               child: Container(
-  //                 height: 150,
-  //                 width: double.infinity,
-  //                 padding: EdgeInsets.all(15),
-  //                 color: Colors.black,
-  //                 child: Row(
-  //                   mainAxisAlignment: MainAxisAlignment.center,
-  //                   children: <Widget>[
-  //                     cameraControlWidget(context),
-  //                   ],
-  //                 ),
-  //               ),
-  //             )
-  //           ],
-  //         ),
-  //       )
-  //     )
-  //   );
-  // }
-
-   Widget cameraWidget(context) {
+  Widget cameraWidget(context) {
     var camera = cameraController.value;
     final size = MediaQuery.of(context).size;
     var scale = size.aspectRatio * camera.aspectRatio;
@@ -166,12 +118,4 @@ class _RecycleState extends State<Recycle> {
         ),
     );
   }
-
-  Widget cameraPreviewWidget() {
-    return AspectRatio(
-      aspectRatio: cameraController.value.aspectRatio,
-      child: CameraPreview(cameraController),
-    );
-  }
-
 }
