@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:bloo_app/widgets/textDisplay.dart';
+import 'package:flutter/services.dart';
 
 class Confirmation extends StatefulWidget {
   const Confirmation({super.key});
@@ -13,60 +14,99 @@ class _ConfirmationState extends State<Confirmation> {
 
   late var arguments;
   late String imagePath;
-  late double aspectRatio;
+  late var value;
 
-  @override
+   @override
   Widget build(BuildContext context) {
     arguments = ModalRoute.of(context)!.settings.arguments as Map;
     imagePath = arguments['imagePath'];
-    aspectRatio = arguments['aspectRatio'];
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(241,253, 240,1),
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(241,253, 240,1),
-        title:  TextDisplay(Colors.black, "Preview", 25.0),
-        automaticallyImplyLeading: false,
-        centerTitle: true,
+    value = arguments['value'];
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.black,
+        statusBarIconBrightness: Brightness.light,
       ),
-      // The image is stored as a file on the device. Use the `Image.file`
-      // constructor with the given path to display the image.
-      body: Container(
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                flex: 1,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(25.0), // Adjust the radius as needed
-                  child: imagePreview(),
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  width: double.infinity,
-                  height: 150.0,
-                  child: Center(
-                    child: buildRow()
-                  )
-                )
-              ),
-            // else
-            //   const CircularProgressIndicator()
-              ]
-            )
-          )
-        )
-      );
-  }
-
-  Widget imagePreview() {
-    return AspectRatio(
-      aspectRatio: aspectRatio,
-      child: Image.file(File(imagePath),fit:BoxFit.cover)
+    );
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: Stack(
+          children: <Widget>[
+            displayImage(context),
+          ],
+        ) 
+      ),
     );
   }
+
+  Widget displayImage(context) {
+    var camera = value;
+    final size = MediaQuery.of(context).size;
+    var scale = size.aspectRatio * camera.aspectRatio;
+
+    if (scale < 1) scale = 1 / scale;
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(25.0), // Adjust the radius as needed
+      child: Transform.scale(
+        scale: scale,
+        child: Center(
+          child: Image.file(File(imagePath)),
+        ),
+      ),
+    );
+  }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   arguments = ModalRoute.of(context)!.settings.arguments as Map;
+  //   imagePath = arguments['imagePath'];
+  //   aspectRatio = arguments['aspectRatio'];
+  //   return Scaffold(
+  //     // backgroundColor: Color.fromRGBO(241,253, 240,1),
+  //     // appBar: AppBar(
+  //     //   backgroundColor: Color.fromRGBO(241,253, 240,1),
+  //     //   title:  TextDisplay(Colors.black, "Preview", 25.0),
+  //     //   automaticallyImplyLeading: false,
+  //     //   centerTitle: true,
+  //     // ),
+  //     body: Container(
+  //       child: SafeArea(
+  //         child: Column(
+  //           crossAxisAlignment: CrossAxisAlignment.stretch,
+  //           children: [
+  //             Expanded(
+  //               flex: 1,
+  //               child: ClipRRect(
+  //                 borderRadius: BorderRadius.circular(25.0), // Adjust the radius as needed
+  //                 child: imagePreview(),
+  //               ),
+  //             ),
+  //             Align(
+  //               alignment: Alignment.bottomCenter,
+  //               child: Container(
+  //                 width: double.infinity,
+  //                 height: 150.0,
+  //                 child: Center(
+  //                   child: buildRow()
+  //                 )
+  //               )
+  //             ),
+  //           // else
+  //           //   const CircularProgressIndicator()
+  //             ]
+  //           )
+  //         )
+  //       )
+  //     );
+  // }
+
+  // Widget imagePreview() {
+  //   return AspectRatio(
+  //     aspectRatio: aspectRatio,
+  //     child: Image.file(File(imagePath),fit:BoxFit.cover)
+  //   );
+  // }
 
   Column buildRow(){
     return Column(

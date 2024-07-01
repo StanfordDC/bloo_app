@@ -137,7 +137,7 @@ class _RecycleState extends State<Recycle> {
 
               // If the picture was taken, display it on a new screen.
               Navigator.pushReplacementNamed(context, '/confirmation', 
-                arguments: {'imagePath' : image.path, 'aspectRatio' : cameraController.value.aspectRatio});
+                arguments: {'imagePath' : image.path, 'value' : cameraController.value});
               } catch (e) {
               // If an error occurs, log the error to the console.
                 print(e);
