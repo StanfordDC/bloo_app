@@ -123,68 +123,6 @@ class _InformationState extends State<Information> {
       },
     );
   }
-  // Column buildColumn(){
-  //   return Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: <Widget>[
-  //         const Padding(
-  //             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-  //             child: TextContainer(TextDisplay(Colors.black, "Waste Type", 20.0)),
-  //         ),
-  //         Padding(
-  //             padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 12.0),
-  //             child: TextContainer(TextDisplay(Colors.black, wasteType, 20.0)),
-  //         ),
-  //         const TextContainer(TextDisplay(Colors.black, "Recyclability Status", 20.0)),
-  //         if(!exist)
-  //           const Padding(
-  //             padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 12.0),
-  //             child: TextContainer(TextDisplay(Colors.black, "NA", 20.0)),
-  //           ),
-  //         if(exist && canBePlaced)
-  //           const Padding(
-  //             padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 12.0),
-  //             child: TextContainer(TextDisplay(Colors.green, "RECYCLABLE", 20.0)),
-  //           ),
-  //         if(exist && !canBePlaced)
-  //           const Padding(
-  //             padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 12.0),
-  //             child: TextContainer(TextDisplay(Colors.red, "NOT RECYCLABLE", 20.0)),
-  //           ),
-  //         const TextContainer(TextDisplay(Colors.black, "Instruction", 20.0)),
-  //         Container(
-  //           width: double.infinity,
-  //           child: Card(
-  //             shape: RoundedRectangleBorder(
-  //               borderRadius: BorderRadius.circular(6.0), // Set the rounded corners
-  //             ),
-  //             color: Colors.white54,
-  //             elevation: 1.0,
-  //             child: Column(
-  //               crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: <Widget>[
-  //                 const Padding(
-  //                   padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-  //                   child: TextDisplay(Colors.black, "", 0.0),
-  //                 ),
-  //                 if(isLowerCase(instructions[0][0].trim()))
-  //                   TextContainer(TextDisplay(Colors.black87, '$wasteType ${instructions[0]}', 15.0)),
-  //                 if(!isLowerCase(instructions[0][0].trim()))
-  //                   TextContainer(TextDisplay(Colors.black87, instructions[0], 15.0)),
-  //                 for(var i = 1 ; i < instructions.length ; i++)
-  //                   TextContainer(TextDisplay(Colors.black87, instructions[i], 15.0)),
-  //                 const Padding(
-  //                   padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
-  //                   child: TextDisplay(Colors.black, "", 0.0),
-  //                 )
-  //               ]
-  //             ),
-  //           ),
-  //         ),
-  //       ]
-  //     );
-  // }
-
 
   bool isLowerCase(String input) {
     if (input.isEmpty) {
