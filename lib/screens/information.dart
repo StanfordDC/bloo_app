@@ -67,8 +67,9 @@ class _InformationState extends State<Information> {
       getType(base64);
     }
     return Scaffold(
+        backgroundColor: Color.fromRGBO(241,253, 240,1),
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(0,195,0,1),
+          backgroundColor: Color.fromRGBO(37,194,38,1),
           title: const TextDisplay(Colors.white, "Detected Objects", 20.0),
           centerTitle: true,
           leading: IconButton(
@@ -104,9 +105,9 @@ class _InformationState extends State<Information> {
         return Padding(
           padding: const EdgeInsets.all(5.0),
           child: Card(
-            elevation: 5,
+            elevation: 4,
             child: ListTile(
-              tileColor: Color.fromRGBO(189,246, 188,0),
+              tileColor: Color.fromRGBO(245,254,253,1),
               title: TextDisplay(Colors.black, wasteType.item.toUpperCase(), 20),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
