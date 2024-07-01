@@ -93,7 +93,7 @@ class _ConfirmationState extends State<Confirmation> {
               width: double.infinity,
               child:  ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
+                    backgroundColor: Color.fromRGBO(245,254,253,1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6.0),
                       side: BorderSide(color: Colors.black), // Set the rounded corners

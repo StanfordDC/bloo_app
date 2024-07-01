@@ -69,11 +69,11 @@ class _InformationState extends State<Information> {
     return Scaffold(
         backgroundColor: Color.fromRGBO(241,253, 240,1),
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(37,194,38,1),
-          title: const TextDisplay(Colors.white, "Detected Objects", 20.0),
+          backgroundColor: Color.fromRGBO(241,253, 240,1),
+          title: const TextDisplay(Colors.black, "Detected Objects", 20.0),
           centerTitle: true,
           leading: IconButton(
-            icon: Icon(Icons.home, size: 30, color: Colors.white), 
+            icon: Icon(Icons.home, size: 30, color: Colors.black), 
             onPressed: () {
               Navigator.popUntil(context, ModalRoute.withName('/'));
             },
@@ -93,30 +93,6 @@ class _InformationState extends State<Information> {
           : wasteTypeList()
         )
       );
-  }
-
-   Column recycleButton(){
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-            child: SizedBox( 
-              width: double.infinity,
-              child:  ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6.0),
-                      side: BorderSide(color: Colors.black), // Set the rounded corners
-                    ),
-                  ),
-                  onPressed: (){Navigator.pushReplacementNamed(context, '/recycle');},
-                  child: const TextDisplay(Colors.black, "Retake", 25.0)),
-            ),
-          ),
-        ]
-    );
   }
 
   ListView wasteTypeList(){
