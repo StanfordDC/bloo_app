@@ -4,6 +4,7 @@ import 'package:bloo_app/models/wasteType.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class Information extends StatefulWidget {
   const Information({super.key});
@@ -155,13 +156,19 @@ class _InformationState extends State<Information> {
           IconButton(
             icon: Icon(Icons.link, color: Colors.grey, size: 30),
             onPressed: () {
-              // Handle link navigation here
-              // Example: launch URL
-              // launch(wasteType.link);
+              _launchURL(link);
             },
           ),
       ],
     );
+  }
+
+  _launchURL(String link) async {
+    if (await canLaunchUrl(Uri.parse(link))) {
+      await launchUrl(Uri.parse(link));
+    } else {
+      throw 'Could not launch $link';
+    }
   }
 
   bool isLowerCase(String input) {
