@@ -14,6 +14,8 @@ class Information extends StatefulWidget {
 
 class _InformationState extends State<Information> {
   late String imagePath;
+  List<int> likedIndexes = [];
+  List<int> dislikedIndexes = [];
   List<WasteType> list = [];
   bool fetching = true;
   int count = 0;
@@ -96,6 +98,8 @@ class _InformationState extends State<Information> {
       itemCount: list.length,
       itemBuilder: (context, index) {
         WasteType wasteType = list[index];
+        bool isLiked = likedIndexes.contains(index);
+        bool isDisliked = dislikedIndexes.contains(index);
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Card(
@@ -107,6 +111,7 @@ class _InformationState extends State<Information> {
                 children: [
                   Text('Recyclable: ${wasteType.recyclable ? 'YES' : 'NO'}'),
                   Text('Instructions: ${wasteType.instructions}'),
+                  responseButtons(index, isLiked, isDisliked)
                 ],
               ),
               trailing: IconButton(
@@ -121,6 +126,40 @@ class _InformationState extends State<Information> {
           ),
         );
       },
+    );
+  }
+
+  Row responseButtons(int index, bool isLiked, bool isDisliked){
+    return Row(
+      children: [
+        IconButton(
+          icon: Icon(Icons.thumb_up, color: isLiked? const Color.fromARGB(255, 67, 66, 66) : Colors.grey,),
+          onPressed: () {
+            setState(() {
+              if (isLiked) {
+                likedIndexes.remove(index);
+              } else {
+                likedIndexes.add(index);
+                dislikedIndexes.remove(index);
+              }
+            });
+          }
+        ),
+        IconButton(
+          icon: Icon(Icons.thumb_down, color: isDisliked? const Color.fromARGB(255, 67, 66, 66) : Colors.grey,),
+          onPressed: () {
+            // Handle thumbs down action here
+            setState(() {
+              if (isDisliked) {
+                dislikedIndexes.remove(index);
+              } else {
+                dislikedIndexes.add(index);
+                likedIndexes.remove(index);
+              }
+            });
+          },
+        ),
+      ],
     );
   }
 
