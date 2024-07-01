@@ -33,6 +33,8 @@ class _ConfirmationState extends State<Confirmation> {
         child: Stack(
           children: <Widget>[
             displayImage(context),
+            confirmButton(),
+            retakeButton()
           ],
         ) 
       ),
@@ -53,6 +55,54 @@ class _ConfirmationState extends State<Confirmation> {
         child: Center(
           child: Image.file(File(imagePath)),
         ),
+      ),
+    );
+  }
+
+  Widget confirmButton() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: GestureDetector(
+          onTap: () {Navigator.pushReplacementNamed(context, '/information', arguments: imagePath);},
+          child: Container(
+            width: 80.0,
+            height: 80.0,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white, width: 4.0),
+              color: Colors.white,
+            ),
+            child: Center(
+              child: Icon(
+                Icons.check, // The correct icon
+                color: Colors.black, // Color of the icon
+                size: 50.0, // Size of the icon
+              ),
+            ),
+          )
+        )
+      ),
+    );
+  }
+
+  Widget retakeButton() {
+    return Positioned(
+      top :0,
+      left: 0,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: GestureDetector(
+          onTap:(){Navigator.pushReplacementNamed(context, '/recycle');},
+          child: Center(
+            child: Icon(
+              Icons.close, 
+              color: Colors.white, // Color of the icon
+              size: 35.0, // Size of the icon
+            ),
+          ),
+        )
       ),
     );
   }

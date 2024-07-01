@@ -126,7 +126,7 @@ class _RecycleState extends State<Recycle> {
     return Align(
         alignment: Alignment.bottomCenter,
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(30.0),
           child: GestureDetector(
             onTap: () async{
             try{
