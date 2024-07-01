@@ -35,72 +35,114 @@ class _RecycleState extends State<Recycle> {
       ),
     );
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        automaticallyImplyLeading: false,
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: FutureBuilder<void>(
+          future: cameraValue,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return Stack(
+                children: <Widget>[
+                  cameraWidget(context),
+                  cameraControlWidget(context),
+                ],
+              );
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
       ),
-      body: Container(
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children:[
-              FutureBuilder(future: cameraValue, builder: (context, snapshot){
-                if(snapshot.connectionState == ConnectionState.done){
-                  return Expanded(
-                    flex: 1,
-                    child: CameraPreview(cameraController),
-                  );
-                }
-                else{
-                  return const Center(child: CircularProgressIndicator(),);
-                }
-              }),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  height: 150,
-                  width: double.infinity,
-                  padding: EdgeInsets.all(15),
-                  color: Colors.black,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      cameraControlWidget(context),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-        )
-      )
+    );
+  }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   SystemChrome.setSystemUIOverlayStyle(
+  //     SystemUiOverlayStyle(
+  //       statusBarColor: Colors.black,
+  //       statusBarIconBrightness: Brightness.light,
+  //     ),
+  //   );
+  //   return Scaffold(
+  //     // appBar: AppBar(
+  //     //   backgroundColor: Colors.black,
+  //     //   automaticallyImplyLeading: false,
+  //     // ),
+  //     body: Container(
+  //       child: SafeArea(
+  //         child: Column(
+  //           crossAxisAlignment: CrossAxisAlignment.stretch,
+  //           children:[
+  //             FutureBuilder(future: cameraValue, builder: (context, snapshot){
+  //               if(snapshot.connectionState == ConnectionState.done){
+  //                 return cameraWidget(context);
+  //               }
+  //               else{
+  //                 return const Center(child: CircularProgressIndicator(),);
+  //               }
+  //             }),
+  //             Align(
+  //               alignment: Alignment.bottomCenter,
+  //               child: Container(
+  //                 height: 150,
+  //                 width: double.infinity,
+  //                 padding: EdgeInsets.all(15),
+  //                 color: Colors.black,
+  //                 child: Row(
+  //                   mainAxisAlignment: MainAxisAlignment.center,
+  //                   children: <Widget>[
+  //                     cameraControlWidget(context),
+  //                   ],
+  //                 ),
+  //               ),
+  //             )
+  //           ],
+  //         ),
+  //       )
+  //     )
+  //   );
+  // }
+
+   Widget cameraWidget(context) {
+    var camera = cameraController.value;
+    final size = MediaQuery.of(context).size;
+    var scale = size.aspectRatio * camera.aspectRatio;
+
+    if (scale < 1) scale = 1 / scale;
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(25.0), // Adjust the radius as needed
+      child: Transform.scale(
+        scale: scale,
+        child: Center(
+          child: CameraPreview(cameraController),
+        ),
+      ),
     );
   }
 
   Widget cameraControlWidget(context) {
-    return Expanded(
-      child: Align(
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            GestureDetector(
-               onTap: () async{
-                try{
-                  await cameraValue;
+    return Align(
+        alignment: Alignment.bottomCenter,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: GestureDetector(
+            onTap: () async{
+            try{
+              await cameraValue;
 
-                  final image = await cameraController.takePicture();
-                  if (!context.mounted) return;
+              final image = await cameraController.takePicture();
+              if (!context.mounted) return;
 
-                  // If the picture was taken, display it on a new screen.
-                  Navigator.pushReplacementNamed(context, '/confirmation', 
-                    arguments: {'imagePath' : image.path, 'aspectRatio' : cameraController.value.aspectRatio});
-                  } catch (e) {
-                  // If an error occurs, log the error to the console.
-                  print(e);
-                  }
-              },
+              // If the picture was taken, display it on a new screen.
+              Navigator.pushReplacementNamed(context, '/confirmation', 
+                arguments: {'imagePath' : image.path, 'aspectRatio' : cameraController.value.aspectRatio});
+              } catch (e) {
+              // If an error occurs, log the error to the console.
+                print(e);
+              }
+            },
               child: Container(
                 width: 80.0,
                 height: 80.0,
@@ -121,9 +163,7 @@ class _RecycleState extends State<Recycle> {
                 ),
               )
             )
-          ],
         ),
-      ),
     );
   }
 
