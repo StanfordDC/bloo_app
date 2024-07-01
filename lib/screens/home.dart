@@ -12,7 +12,9 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(241,253, 240,1),
       appBar: AppBar(
+        backgroundColor: Color.fromRGBO(241,253, 240,1),
           // leading:  IconButton(
           //   icon: const Icon(
           //     Icons.feed_outlined,
@@ -33,39 +35,30 @@ class _HomeState extends State<Home> {
           // ]
       ),
       body: SafeArea(
-        child: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('images/blur-background.jpg'),
-              fit: BoxFit.cover,
-            )
-          ),
-          margin: const EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 0.0),
-          height: 200,
-          width: 400,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextButton(
-                child: const Icon(
-                  Icons.recycling,
-                  size: 80,
-                  color: Colors.black,
-                ),
-                onPressed: (){
-                  Navigator.pushNamed(context, '/recycle');
-                },
+      child: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/recycle');
+              },
+              child: Icon(
+                Icons.recycling,
+                size: 130,
+                color: Color.fromRGBO(37,194,38,1),
               ),
-              TextButton(
-                child: const TextDisplay(Colors.black, "Start Recycling", 25.0),
-                  onPressed: (){
-                    Navigator.pushNamed(context, '/recycle');
-                  },
-              ),
-            ]
-          )
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/recycle');
+              },
+              child: TextDisplay(Color.fromRGBO(37,194,38,1), "Start Recycling Right", 30.0),
+            ),
+          ],
+        ),
       ),
-    ));
+    ),);
   }
 }
