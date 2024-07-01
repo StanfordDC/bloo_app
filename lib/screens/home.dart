@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:bloo_app/widgets/textDisplay.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
