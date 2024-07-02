@@ -10,6 +10,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final containerSize = screenWidth * 0.3;
     return Scaffold(
       backgroundColor: Color.fromRGBO(241,253, 240,1),
       body: SafeArea(
@@ -24,7 +26,7 @@ class _HomeState extends State<Home> {
               },
               child: Icon(
                 Icons.recycling,
-                size: 130,
+                size: containerSize,
                 color: Color.fromRGBO(37,194,38,1),
               ),
             ),

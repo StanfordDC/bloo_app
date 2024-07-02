@@ -76,7 +76,6 @@ class _RecycleState extends State<Recycle> {
 
   Widget cameraControlWidget(context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
     final containerSize = screenWidth * 0.2;
     return Align(
         alignment: Alignment.bottomCenter,
