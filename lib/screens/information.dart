@@ -153,7 +153,7 @@ class _InformationState extends State<Information> {
       objects[list[index].item] = true;
     }
     for(int index in dislikedIndexes){
-      objects[list[index].item] = true;
+      objects[list[index].item] = false;
     }
     Map<String, dynamic> response = {
       'base64Encoding': base64,
