@@ -61,6 +61,9 @@ class _InformationState extends State<Information> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    double fontSize = screenWidth * 0.05;
     if(fetching){
       imagePath = ModalRoute.of(context)!.settings.arguments as String;
       var base64 = convert(imagePath);
@@ -70,14 +73,9 @@ class _InformationState extends State<Information> {
         backgroundColor: Color.fromRGBO(241,253, 240,1),
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(241,253, 240,1),
-          title: const TextDisplay(Colors.black, "Detected Objects", 20.0),
+          title: TextDisplay(Colors.black, "Detected Objects", fontSize),
           centerTitle: true,
-          leading: IconButton(
-            icon: Icon(Icons.home, size: 30, color: Colors.black), 
-            onPressed: () {
-              Navigator.popUntil(context, ModalRoute.withName('/'));
-            },
-          ),
+          automaticallyImplyLeading: false,
         ),
         body: Center(
           child: fetching ? Column(
@@ -87,20 +85,22 @@ class _InformationState extends State<Information> {
                   color: Color.fromARGB(255, 97, 199, 82),
                   backgroundColor: Color.fromARGB(255, 169, 194, 165),
                 ),
-                const TextDisplay(Colors.black, 'Loading...', 25),
+                TextDisplay(Colors.black, 'Loading...', fontSize),
               ],
             )
-          : wasteTypeList()
+          : wasteTypeList(context)
         )
       );
   }
 
-  ListView wasteTypeList(){
+  ListView wasteTypeList(context){
+    double screenWidth = MediaQuery.of(context).size.width;
+    double fontSize = screenWidth * 0.04;
     return ListView.builder(
       itemCount: list.length + 1,
       itemBuilder: (context, index) {
         if(index == list.length)
-          return buildButtons();
+          return buildButtons(context);
         WasteType wasteType = list[index];
         bool isLiked = likedIndexes.contains(index);
         bool isDisliked = dislikedIndexes.contains(index);
@@ -110,7 +110,7 @@ class _InformationState extends State<Information> {
             elevation: 4,
             child: ListTile(
               tileColor: Color.fromRGBO(245,254,253,1),
-              title: TextDisplay(Colors.black, wasteType.item.toUpperCase(), 20),
+              title: TextDisplay(Colors.black, wasteType.item.toUpperCase(), fontSize),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -136,7 +136,9 @@ class _InformationState extends State<Information> {
     );
   }
 
-  Column buildButtons(){
+  Column buildButtons(context){
+    double screenWidth = MediaQuery.of(context).size.width;
+    double fontSize = screenWidth * 0.05;
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -151,12 +153,12 @@ class _InformationState extends State<Information> {
                       borderRadius: BorderRadius.circular(6.0), // Set the rounded corners
                     ),
                   ),
-                  onPressed: (){Navigator.pushReplacementNamed(context, '/information', arguments: imagePath);},
-                  child: const TextDisplay(Colors.white, "Confirm", 25.0)),
+                  onPressed: (){Navigator.pushReplacementNamed(context, '/recycle');},
+                  child: TextDisplay(Colors.white, "Recycle Again", fontSize)),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
             child: SizedBox( 
               width: double.infinity,
               child:  ElevatedButton(
@@ -167,8 +169,8 @@ class _InformationState extends State<Information> {
                       side: BorderSide(color: Colors.black), // Set the rounded corners
                     ),
                   ),
-                  onPressed: (){Navigator.pushReplacementNamed(context, '/recycle');},
-                  child: const TextDisplay(Colors.black, "Retake", 25.0)),
+                  onPressed: (){Navigator.popUntil(context, ModalRoute.withName('/'));},
+                  child: TextDisplay(Colors.black, "Home",fontSize)),
             ),
           ),
         ]
