@@ -62,7 +62,6 @@ class _InformationState extends State<Information> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
     double fontSize = screenWidth * 0.05;
     if(fetching){
       imagePath = ModalRoute.of(context)!.settings.arguments as String;
@@ -118,6 +117,11 @@ class _InformationState extends State<Information> {
                   Text(wasteType.recyclable ? 'RECYCLABLE' : 'NOT RECYCLABLE',  style: TextStyle(
                     fontWeight: FontWeight.w500,
                     color: wasteType.recyclable ? Colors.green : Colors.red,
+                  ),),
+                  SizedBox(height: 5),
+                  Text('Material: '+wasteType.material.toLowerCase(), style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
                   ),),
                   SizedBox(height: 5),
                   Text('Recycling Instructions', style: TextStyle(
