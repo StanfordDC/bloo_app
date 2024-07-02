@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Information extends StatefulWidget {
   const Information({super.key});
@@ -14,7 +15,9 @@ class Information extends StatefulWidget {
 }
 
 class _InformationState extends State<Information> {
+  final CollectionReference wasteTypeResponse = FirebaseFirestore.instance.collection('wastetypeResponse');
   late String imagePath;
+  late String base64;
   List<int> likedIndexes = [];
   List<int> dislikedIndexes = [];
   List<WasteType> list = [];
@@ -65,7 +68,7 @@ class _InformationState extends State<Information> {
     double fontSize = screenWidth * 0.05;
     if(fetching){
       imagePath = ModalRoute.of(context)!.settings.arguments as String;
-      var base64 = convert(imagePath);
+      base64 = convert(imagePath);
       getType(base64);
     }
     return Scaffold(
@@ -139,6 +142,30 @@ class _InformationState extends State<Information> {
       },
     );
   }
+  
+  Future<void> addWasteTypeResponse() async {
+    // Example data to add to Firestore
+    if(likedIndexes.length == 0 && dislikedIndexes.length == 0){
+      return ;
+    }
+    Map<String, bool> objects= {};
+    for(int index in likedIndexes){
+      objects[list[index].item] = true;
+    }
+    for(int index in dislikedIndexes){
+      objects[list[index].item] = true;
+    }
+    Map<String, dynamic> response = {
+      'base64Encoding': base64,
+      'objects': objects,
+    };
+    try {
+      await wasteTypeResponse.add(response);
+      print('Response added to Firestore');
+    } catch (error) {
+      print('Failed to add response: $error');
+    }
+  }
 
   Column buildButtons(context){
     double screenWidth = MediaQuery.of(context).size.width;
@@ -157,7 +184,9 @@ class _InformationState extends State<Information> {
                       borderRadius: BorderRadius.circular(6.0), // Set the rounded corners
                     ),
                   ),
-                  onPressed: (){Navigator.pushReplacementNamed(context, '/recycle');},
+                  onPressed: (){
+                    addWasteTypeResponse(); 
+                    Navigator.pushReplacementNamed(context, '/recycle');},
                   child: TextDisplay(Colors.white, "Recycle Again", fontSize)),
             ),
           ),
@@ -173,7 +202,9 @@ class _InformationState extends State<Information> {
                       side: BorderSide(color: Colors.black), // Set the rounded corners
                     ),
                   ),
-                  onPressed: (){Navigator.popUntil(context, ModalRoute.withName('/'));},
+                  onPressed: (){
+                    addWasteTypeResponse(); 
+                    Navigator.popUntil(context, ModalRoute.withName('/'));},
                   child: TextDisplay(Colors.black, "Home",fontSize)),
             ),
           ),
