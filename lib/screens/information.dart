@@ -97,8 +97,10 @@ class _InformationState extends State<Information> {
 
   ListView wasteTypeList(){
     return ListView.builder(
-      itemCount: list.length,
+      itemCount: list.length + 1,
       itemBuilder: (context, index) {
+        if(index == list.length)
+          return buildButtons();
         WasteType wasteType = list[index];
         bool isLiked = likedIndexes.contains(index);
         bool isDisliked = dislikedIndexes.contains(index);
@@ -131,6 +133,45 @@ class _InformationState extends State<Information> {
           ),
         );
       },
+    );
+  }
+
+  Column buildButtons(){
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 5.0),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(37,194,38,1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6.0), // Set the rounded corners
+                    ),
+                  ),
+                  onPressed: (){Navigator.pushReplacementNamed(context, '/information', arguments: imagePath);},
+                  child: const TextDisplay(Colors.white, "Confirm", 25.0)),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+            child: SizedBox( 
+              width: double.infinity,
+              child:  ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(245,254,253,1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6.0),
+                      side: BorderSide(color: Colors.black), // Set the rounded corners
+                    ),
+                  ),
+                  onPressed: (){Navigator.pushReplacementNamed(context, '/recycle');},
+                  child: const TextDisplay(Colors.black, "Retake", 25.0)),
+            ),
+          ),
+        ]
     );
   }
 
