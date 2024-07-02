@@ -64,7 +64,7 @@ class _RecycleState extends State<Recycle> {
     if (scale < 1) scale = 1 / scale;
 
     return ClipRRect(
-      borderRadius: BorderRadius.circular(25.0), // Adjust the radius as needed
+      borderRadius: BorderRadius.circular(35.0), // Adjust the radius as needed
       child: Transform.scale(
         scale: scale,
         child: Center(
@@ -75,6 +75,9 @@ class _RecycleState extends State<Recycle> {
   }
 
   Widget cameraControlWidget(context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final containerSize = screenWidth * 0.2;
     return Align(
         alignment: Alignment.bottomCenter,
         child: Padding(
@@ -96,17 +99,17 @@ class _RecycleState extends State<Recycle> {
               }
             },
               child: Container(
-                width: 80.0,
-                height: 80.0,
+                width: containerSize,
+                height: containerSize,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 4.0),
+                  border: Border.all(color: Colors.white, width: 0.01 * screenWidth),
                   color: Colors.transparent,
                 ),
                 child: Center(
                   child: Container(
-                    width: 65.0,
-                    height: 65.0,
+                    width: containerSize * 0.8, // Adjusted to maintain aspect ratio
+                    height: containerSize * 0.8, // Adjusted to maintain aspect ratio
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.white,
