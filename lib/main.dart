@@ -13,11 +13,13 @@ Future<void> main() async {
   await Firebase.initializeApp(
     name: 'bloo-app',
     options: FirebaseOptions(
-      apiKey: 'AIzaSyC_4NXebFUtXUCB3GDwlen3joeQ3ev357Q',
-      appId: '1:797587856663:android:1324c1073e3decf508ab52',
-      messagingSenderId: '797587856663',
-      projectId: 'blooapp-25ad6',
-      storageBucket: 'blooapp-25ad6.appspot.com',
+      apiKey: "AIzaSyCU2dyuAwjCOmB2om_icyq5ZcGMmcQqgGk",
+      authDomain: "recyclesg-2a357.firebaseapp.com",
+      databaseURL: "https://recyclesg-2a357-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "recyclesg-2a357",
+      storageBucket: "recyclesg-2a357.appspot.com",
+      messagingSenderId: "375069917976",
+      appId: "1:375069917976:web:c02006b142a8be8a94946d"
     ),
   );
   final cameras = await availableCameras();

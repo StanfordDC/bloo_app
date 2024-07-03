@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class Information extends StatefulWidget {
   const Information({super.key});
@@ -15,7 +16,7 @@ class Information extends StatefulWidget {
 }
 
 class _InformationState extends State<Information> {
-  final CollectionReference wasteTypeResponse = FirebaseFirestore.instance.collection('wastetypeResponse');
+  final CollectionReference wasteTypeResponse = FirebaseFirestore.instanceFor(app: Firebase.app('bloo-app')).collection('wastetypeResponse');
   late String imagePath;
   late String base64;
   List<int> likedIndexes = [];
