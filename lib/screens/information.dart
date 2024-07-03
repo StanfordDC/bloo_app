@@ -146,15 +146,15 @@ class _InformationState extends State<Information> {
   
   Future<void> addWasteTypeResponse() async {
     // Example data to add to Firestore
-    if(likedIndexes.length == 0 && dislikedIndexes.length == 0){
-      return ;
+    Map<String, int> objects= {};
+    for(WasteType w in list){
+      objects[w.item] = 0;
     }
-    Map<String, bool> objects= {};
     for(int index in likedIndexes){
-      objects[list[index].item] = true;
+      objects[list[index].item] = 1;
     }
     for(int index in dislikedIndexes){
-      objects[list[index].item] = false;
+      objects[list[index].item] = 2;
     }
     Map<String, dynamic> response = {
       'base64Encoding': base64,
