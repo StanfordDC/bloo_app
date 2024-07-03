@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class Information extends StatefulWidget {
   const Information({super.key});
@@ -17,6 +18,7 @@ class Information extends StatefulWidget {
 
 class _InformationState extends State<Information> {
   final CollectionReference wasteTypeResponse = FirebaseFirestore.instanceFor(app: Firebase.app('bloo-app')).collection('wastetypeResponse');
+  final FirebaseStorage storage = FirebaseStorage.instanceFor(app: Firebase.app('bloo-app'));
   late String imagePath;
   late String base64;
   List<int> likedIndexes = [];
@@ -156,8 +158,9 @@ class _InformationState extends State<Information> {
     for(int index in dislikedIndexes){
       objects[list[index].item] = 2;
     }
+    String? imageUrl = await uploadImage();
     Map<String, dynamic> response = {
-      'base64Encoding': base64,
+      'imageUrl': imageUrl,
       'objects': objects,
     };
     try {
@@ -166,6 +169,25 @@ class _InformationState extends State<Information> {
     } catch (error) {
       print('Failed to add response: $error');
     }
+  }
+
+  Future<String?> uploadImage() async {
+    File imageFile = File(imagePath);
+
+    try {
+      final fileName = imageFile.path.split('/').last;
+      final storageRef = storage.ref().child('uploads/$fileName');
+      final uploadTask = storageRef.putFile(imageFile);
+
+      final snapshot = await uploadTask;
+      final downloadUrl = await snapshot.ref.getDownloadURL();
+
+      print('Uploaded image URL: $downloadUrl');
+      return downloadUrl;
+    } catch (e) {
+      print('Error occurred while uploading image: $e');
+    }
+    return null;
   }
 
   Column buildButtons(context){
