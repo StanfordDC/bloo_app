@@ -176,7 +176,7 @@ class _InformationState extends State<Information> {
 
     try {
       final fileName = imageFile.path.split('/').last;
-      final storageRef = storage.ref().child('uploads/$fileName');
+      final storageRef = storage.ref().child('imageResponses/$fileName');
       final uploadTask = storageRef.putFile(imageFile);
 
       final snapshot = await uploadTask;
