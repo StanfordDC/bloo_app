@@ -17,7 +17,7 @@ class Information extends StatefulWidget {
 }
 
 class _InformationState extends State<Information> {
-  final CollectionReference wasteTypeResponse = FirebaseFirestore.instanceFor(app: Firebase.app('bloo-app')).collection('wastetypeResponse');
+  final CollectionReference wasteTypeFeedback = FirebaseFirestore.instanceFor(app: Firebase.app('bloo-app')).collection('wasteTypeFeedback');
   final FirebaseStorage storage = FirebaseStorage.instanceFor(app: Firebase.app('bloo-app'));
   late String imagePath;
   late String base64;
@@ -53,11 +53,8 @@ class _InformationState extends State<Information> {
       setState(() {
         fetching = false;
         count++;
-        if(data['from_database'].length != 0){
-          list.addAll((data['from_database'] as List).map((item) => WasteType.fromJson(item)).toList());
-        }
-        if(data['from_llm'].length != 0){
-           list.addAll((data['from_llm'] as List).map((item) => WasteType.fromJson(item)).toList());
+        if(data['data'].length != 0){
+          list.addAll((data['data'] as List).map((item) => WasteType.fromJson(item)).toList());
         }
       });
     } else {
@@ -148,23 +145,29 @@ class _InformationState extends State<Information> {
   
   Future<void> addWasteTypeResponse() async {
     // Example data to add to Firestore
-    Map<String, int> objects= {};
-    for(WasteType w in list){
-      objects[w.item] = 0;
+    List<Map<String, dynamic>> items = [];
+    for(int i = 0 ; i < list.length ; i++){
+      Map<String, dynamic> item= {};
+      WasteType w = list[i];
+      item['item'] = w.item;
+      item['source'] = w.source;
+      item['feedback'] = 0;
+      items.add(item);
     }
+ 
     for(int index in likedIndexes){
-      objects[list[index].item] = 1;
+      items[index]['feedback'] = 1;
     }
     for(int index in dislikedIndexes){
-      objects[list[index].item] = 2;
+      items[index]['feedback'] = 2;
     }
     String? imageUrl = await uploadImage();
     Map<String, dynamic> response = {
       'imageUrl': imageUrl,
-      'objects': objects,
+      'items': items,
     };
     try {
-      await wasteTypeResponse.add(response);
+      await wasteTypeFeedback.add(response);
       print('Response added to Firestore');
     } catch (error) {
       print('Failed to add response: $error');
