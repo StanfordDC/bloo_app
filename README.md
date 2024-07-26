@@ -74,8 +74,8 @@ Clone the repo
 
 [firebase-url]: https://firebase.google.com/
 [firebase.com]: https://img.shields.io/badge/firebase-black?style=for-the-badge&logo=firebase&logoColor=color
-[go-url]: https://go.dev/
-[go.com]: https://img.shields.io/badge/go-00ADD8?style=for-the-badge&logo=go&logoColor=white
+[go-url]: https://dart.dev/
+[dart.com]: https://img.shields.io/badge/go-00ADD8?style=for-the-badge&logo=go&logoColor=white
 [docker-url]: https://www.docker.com/
 [docker.com]: https://img.shields.io/badge/docker-black?style=for-the-badge&logo=docker&logoColor=color
 
