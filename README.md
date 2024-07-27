@@ -78,20 +78,16 @@ The application aims to make recycling and waste disposal more accessible and ac
 <!-- SCREENSHOT OF THE APP -->
 ## Screenshots of the App
 1. Home
-
-![Home](./images/Home.jpg)
+<img src="./images/Home.jpg" alt="Home" width="250"/>
 
 2. Capture Image
-
-![Capture](./images/Picture.jpg)
+<img src="./images/Picture.jpg" alt="Home" width="250"/>
 
 3. Confirm Image
-   
-![Confirm](./images/Confirm.jpg)
+<img src="./images/Confirm.jpg" alt="Home" width="250"/>
 
 4. Detected items
-   
-![Result](./images/Result.jpg)
+<img src="./images/Result.jpg" alt="Home" width="250"/>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
