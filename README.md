@@ -1,4 +1,6 @@
+<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a name="readme-top" id="readme-top"></a>
+
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
@@ -14,68 +16,85 @@
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
-        <li><a href="#run-locally">Run locally</a></li>
-        <li><a href="#run-using-docker">Run using Docker</a></li>
+        <li><a href="#run-the-app">Run the App</a></li>
       </ul>
+    </li>
+    <li>
+      <a href="#screenshots-of-the-app">Screenshots of the app</a>
     </li>
   </ol>
 </details>
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
-The project is designed specifically for administrators to efficiently manage waste types and gain insights into mobile app usage.
 
-The backend provides comprehensive functionality for administrators to manage waste types and the logic to track mobile app usage metrics
+<!-- ABOUT THE PROJECT -->
+## About the Project
+The application aims to make recycling and waste disposal more accessible and accurate for everyone. Users can capture images of items using the app, which will then analyze and detect the objects within the images. The app will classify each detected item based on the NEA's (National Environment Agency) waste list, determining whether it is recyclable or not. Additionally, it provides users with specific disposal instructions, ensuring proper and environmentally friendly waste management practices. 
+
 
 ### Built With
-* [![Go][go.com]][go-url]
+
+* [![Dart][Dart.com]][Dart-url]
+* [![Flutter][Flutter.com]][Flutter-url]
 * [![Firebase][firebase.com]][firebase-url]
-* [![Docker][docker.com]][docker-url]
 
 
 <!-- GETTING STARTED -->
 ## Getting Started
 ### Prerequisites
-1. Create a Firebase project.
-2. Add Firebase to Android application.
-3. Download the google-services.json file and rename it to serviceAccountKey.json.
-4. Move the serviceAccountKey.json file to the cmd/main folder.
+1. Create a Firebase project
+2. Add Firebase to Android application
+3. [Android Studio] installed
+4. Create an emulator in Android Studio
 
 ### Installation
-Clone the repo
+1. Clone the repo
    ```sh
-   git clone https://github.com/StanfordDC/admin-backend.git
-   ```
-### Run locally
-1. Install Go
-2. Change directory to main folder
-   ```sh
-   cd admin-backend/cmd/main
-   ```
-3. Run the application
-   ```sh
-   go run main.go
+   git clone https://github.com/StanfordDC/bloo_app.git
    ```
 
-### Run using Docker
-1. Change directory to root
+### Run the App
+1. Replace variable in curly braces in main.dart file with your own credentials.
+    ```sh
+      apiKey: {Firebase api key},
+      authDomain: {Firebase auth domain},
+      databaseURL: {Firebase database url},
+      projectId: {Firebase project id},
+      storageBucket: {Firebase storage bucket},
+      messagingSenderId: {Firebase sender id},
+      appId: {Firebase app id}
+    ```
+    The credentials can be found on Firebase project console Project Settings > General > Your Apps > Web App
+
+2. Change directory to root
    ```sh
-   cd admin-backend
+   cd bloo_app
    ```
-2. Build the docker image
+   
+3. Run the app
    ```sh
-   docker build -t admin-backend ./
+   flutter run
    ```
-3. Run the docker container
-   ```js
-   docker run -p 8080:8080 admin-backend
-   ```
+
+<!-- SCREENSHOT OF THE APP -->
+## Screenshot of the App
+1. Login Page
+![Login](./public/login.png)
+2. Home Page
+![Home](./public/home.png)
+3. Add Waste Type Page
+![Add](./public/add-waste-type.png)
+4. Search Waste Type Page
+![Search](./public/search-waste-type.png)
+5. User Responses Page
+![Responses](./public/responses.png)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+
+[Flutter-url]: https://flutter.dev/
+[Flutter.com]: https://img.shields.io/badge/Flutter%20-%2302569B.svg?&style=for-the-badge&logo=Flutter&logoColor=white
+[Dart-url]: https://dart.dev/
+[Dart.com]: https://img.shields.io/badge/dart-%230175C2.svg?&style=for-the-badge&logo=dart&logoColor=white
 [firebase-url]: https://firebase.google.com/
 [firebase.com]: https://img.shields.io/badge/firebase-black?style=for-the-badge&logo=firebase&logoColor=color
-[go-url]: https://dart.dev/
-[dart.com]: https://img.shields.io/badge/go-00ADD8?style=for-the-badge&logo=go&logoColor=white
-[docker-url]: https://www.docker.com/
-[docker.com]: https://img.shields.io/badge/docker-black?style=for-the-badge&logo=docker&logoColor=color
-
+[Android Studio]: https://developer.android.com/studio
