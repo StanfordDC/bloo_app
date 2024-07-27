@@ -76,17 +76,22 @@ The application aims to make recycling and waste disposal more accessible and ac
    ```
 
 <!-- SCREENSHOT OF THE APP -->
-## Screenshot of the App
-1. Login Page
-![Login](./public/login.png)
-2. Home Page
-![Home](./public/home.png)
-3. Add Waste Type Page
-![Add](./public/add-waste-type.png)
-4. Search Waste Type Page
-![Search](./public/search-waste-type.png)
-5. User Responses Page
-![Responses](./public/responses.png)
+## Screenshots of the App
+1. Home
+
+![Home](./images/Home.jpg)
+
+2. Capture Image
+
+![Capture](./images/Picture.jpg)
+
+3. Confirm Image
+   
+![Confirm](./images/Confirm.jpg)
+
+4. Detected items
+   
+![Result](./images/Result.jpg)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
